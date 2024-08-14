@@ -8,6 +8,11 @@ let trashNotes = [];
 let achiveNotesTitles = [];
 let achiveNotes = [];
 
+let allNotes = {
+    'notesTitles':['Ba','Aufgabe'],
+    
+}
+
 function init() {    
     renderNotes();
     getFromLocalStorage();
@@ -124,5 +129,3 @@ function eraseNote(indexTrashNote) {
     renderTrashNotes();
     renderAchiveNotes();
 }
-
-new Object
