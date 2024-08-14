@@ -9,8 +9,8 @@ let achiveNotesTitles = [];
 let achiveNotes = [];
 
 function init() {    
-    getFromLocalStorage();
     renderNotes();
+    getFromLocalStorage();
     renderTrashNotes();
     renderAchiveNotes();
 }
