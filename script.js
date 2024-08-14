@@ -124,3 +124,5 @@ function eraseNote(indexTrashNote) {
     renderTrashNotes();
     renderAchiveNotes();
 }
+
+new Object
