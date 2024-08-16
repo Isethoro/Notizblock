@@ -1,16 +1,7 @@
 
-let notesTitles = ['Ba','Aufgabe'];
-let notes = [ 'Banana','Rasenmähen'];
-
-let trashNotesTitles = [];
-let trashNotes = [];
-
-let achiveNotesTitles = [];
-let achiveNotes = [];
-
 let allNotes = {
-    'notesTitles':['Ba','Aufgabe'],
-    'notes':['Banana','Rasenmähen'],
+    'notesTitles':[],
+    'notes':[],
     'trashNotesTitles':[],
     'trashNotes':[],
     'achiveNotesTitles':[],
@@ -82,15 +73,15 @@ function addNote() {
 }
 
 function saveToLocalStorage() {
-    localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem('notes', JSON.stringify(allNotes));
 }
 
 function getFromLocalStorage() {
-    let myArray = JSON.parse(localStorage.getItem('notes'));
+    let myArray = JSON.parse(localStorage.getItem('allNotes.notes'));
     if (myArray == null) {
-        notes != myArray;
+        allNotes.notes != myArray;
     } else {
-        notes = myArray;
+        allNotes.notes = myArray;
     }
     
 }
@@ -110,42 +101,10 @@ function moveNote(indexNote, startKey, destinationKey) {
     
 }
 
-function deleteNote(indexNote) {
-    let trashNote = notes.splice(indexNote,1);
-    trashNotes.push(trashNote[0]);
-    let trashNoteTitle = notesTitles.splice(indexNote,1);
-    trashNotesTitles.push(trashNoteTitle[0]);
-
-
-    saveToLocalStorage();
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
-}
-
-function achiveNote(indexNote) {
-    let achiveNote = notes.splice(indexNote,1);
-    achiveNotes.push(achiveNote[0]);
-    let achiveNoteTitle = notesTitles.splice(indexNote,1);
-    achiveNotesTitles.push(achiveNoteTitle[0]);
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
-}
-
-function reActivateNote(indexAchiveNote) {
-    let note = achiveNotes.splice(indexAchiveNote,1);
-    notes.push(note[0]);
-    let noteTitle = achiveNotesTitles.splice(indexAchiveNote,1);
-    notesTitles.push(noteTitle[0]);
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
-}
-
 function eraseNote(indexTrashNote) {
-    trashNotes.splice(indexTrashNote,1);
-    trashNotesTitles.splice(indexTrashNote,1);
+    allNotes.trashNotes.splice(indexTrashNote,1);
+    allNotes.trashNotesTitles.splice(indexTrashNote,1);
+
     renderNotes();
     renderTrashNotes();
     renderAchiveNotes();
