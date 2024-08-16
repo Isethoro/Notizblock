@@ -10,12 +10,16 @@ let achiveNotes = [];
 
 let allNotes = {
     'notesTitles':['Ba','Aufgabe'],
-    
+    'notes':['Banana','Rasenmähen'],
+    'trashNotesTitles':[],
+    'trashNotes':[],
+    'achiveNotesTitles':[],
+    'achiveNotes':[],
 }
 
 function init() {    
-    renderNotes();
     getFromLocalStorage();
+    renderNotes();
     renderTrashNotes();
     renderAchiveNotes();
 }
@@ -26,7 +30,7 @@ function renderNotes() {
     let contentRef = document.getElementById('content');
     contentRef.innerHTML = "";
 
-    for (let indexNote = 0; indexNote < notes.length; indexNote++) {
+    for (let indexNote = 0; indexNote < allNotes.notes.length; indexNote++) {
         contentRef.innerHTML += getNoteTemplate(indexNote);    
     }    
     
@@ -36,7 +40,7 @@ function renderTrashNotes() {
     let trashContentRef = document.getElementById('trash_content');
     trashContentRef.innerHTML = "";
 
-    for (let indexTrashNote = 0; indexTrashNote < trashNotes.length; indexTrashNote++) {
+    for (let indexTrashNote = 0; indexTrashNote < allNotes.trashNotes.length; indexTrashNote++) {
         trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote);    
     }    
     
@@ -46,7 +50,7 @@ function renderAchiveNotes() {
     let achiveContentRef = document.getElementById('achive_content');
     achiveContentRef.innerHTML = "";
 
-    for (let indexAchiveNote = 0; indexAchiveNote < achiveNotes.length; indexAchiveNote++) {
+    for (let indexAchiveNote = 0; indexAchiveNote < allNotes.achiveNotes.length; indexAchiveNote++) {
         achiveContentRef.innerHTML += getAchiveNoteTemplate(indexAchiveNote);    
     }    
     
@@ -60,11 +64,11 @@ function addNote() {
     let noteTitleInput = noteTitleInputRef.value;
 
     if (noteTitleInputRef.value != "") {
-        notesTitles.push(noteTitleInput);
+        allNotes.notesTitles.push(noteTitleInput);
     }
 
     if (noteInputRef.value != "") {
-        notes.push(noteInput);
+        allNotes.notes.push(noteInput);
     }
     
     saveToLocalStorage();
@@ -91,11 +95,28 @@ function getFromLocalStorage() {
     
 }
 
+function moveNote(indexNote, startKey, destinationKey) {
+    let note = allNotes[startKey].splice(indexNote,1);
+    allNotes[destinationKey].push(note[0]);
+
+    let noteTitle = allNotes[startKey + 'Titles'].splice(indexNote,1);
+    allNotes[destinationKey + 'Titles'].push(noteTitle[0]);
+
+
+    saveToLocalStorage();
+    renderNotes();
+    renderTrashNotes();
+    renderAchiveNotes();
+    
+}
+
 function deleteNote(indexNote) {
     let trashNote = notes.splice(indexNote,1);
     trashNotes.push(trashNote[0]);
     let trashNoteTitle = notesTitles.splice(indexNote,1);
     trashNotesTitles.push(trashNoteTitle[0]);
+
+
     saveToLocalStorage();
     renderNotes();
     renderTrashNotes();
@@ -112,10 +133,10 @@ function achiveNote(indexNote) {
     renderAchiveNotes();
 }
 
-function reActivateNote(indexNote) {
-    let note = notes.splice(indexNote,1);
+function reActivateNote(indexAchiveNote) {
+    let note = achiveNotes.splice(indexAchiveNote,1);
     notes.push(note[0]);
-    let noteTitle = notesTitles.splice(indexNote,1);
+    let noteTitle = achiveNotesTitles.splice(indexAchiveNote,1);
     notesTitles.push(noteTitle[0]);
     renderNotes();
     renderTrashNotes();

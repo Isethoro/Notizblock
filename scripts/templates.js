@@ -1,11 +1,11 @@
 function getNoteTemplate(indexNote) {
-    return `<p>+ title: ${notesTitles[indexNote]} -> ${notes[indexNote]} <button onclick="deleteNote(${indexNote})">X</button><button onclick="achiveNote(${indexNote})">A</button></p>`;    
+    return `<p>+ title: ${allNotes.notesTitles[indexNote]} -> ${allNotes.notes[indexNote]} <button onclick="moveNote(${indexNote},'notes','trashNotes')">X</button><button onclick="moveNote(${indexNote},'notes','achiveNotes')">A</button></p>`;    
 }
 
 function getTrashNoteTemplate(indexTrashNote) {
-    return `<p>+ title: ${trashNotesTitles[indexTrashNote]} -> ${trashNotes[indexTrashNote]} <button onclick="eraseNote(${indexTrashNote})">X</button><button onclick="achiveNote(${indexTrashNote})">A</button></p>`;   
+    return `<p>+ title: ${allNotes.trashNotesTitles[indexTrashNote]} -> ${allNotes.trashNotes[indexTrashNote]} <button onclick="eraseNote(${indexTrashNote})">X</button><button onclick="moveNote(${indexTrashNote},'trashNotes','achiveNotes')">A</button></p>`;   
 }
 
 function getAchiveNoteTemplate(indexAchiveNote) {
-    return `<p>+ title: ${achiveNotesTitles[indexAchiveNote]} -> ${achiveNotes[indexAchiveNote]} <button onclick="deleteNote(${indexAchiveNote})">X</button><button onclick="reActivateNote(${indexAchiveNote})">N</button></p>`;
+    return `<p>+ title: ${allNotes.achiveNotesTitles[indexAchiveNote]} -> ${allNotes.achiveNotes[indexAchiveNote]} <button onclick="moveNote(${indexAchiveNote},'achiveNotes','trashNotes')">X</button><button onclick="moveNote(${indexAchiveNote},'achiveNotes','notes')">N</button></p>`;
 }
