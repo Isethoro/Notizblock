@@ -1,7 +1,7 @@
 
 let allNotes = {
-    'notesTitles':[],
-    'notes':[],
+    'notesTitles':['Ba','Aufgabe'],
+    'notes':['Banana','Rasenmähen'],
     'trashNotesTitles':[],
     'trashNotes':[],
     'achiveNotesTitles':[],
@@ -10,12 +10,14 @@ let allNotes = {
 
 function init() {    
     getFromLocalStorage();
+    renderAllNotes();
+}
+
+function renderAllNotes() {
     renderNotes();
     renderTrashNotes();
     renderAchiveNotes();
 }
-
-
 
 function renderNotes() {
     let contentRef = document.getElementById('content');
@@ -55,33 +57,30 @@ function addNote() {
     let noteTitleInput = noteTitleInputRef.value;
 
     if (noteTitleInputRef.value != "") {
-        noteTitle.push(noteTitleInput);
+        allNotes.notesTitles.push(noteTitleInput);
     }
 
     if (noteInputRef.value != "") {
-        notes.push(noteInput);
+        allNotes.notes.push(noteInput);
     }
     
     saveToLocalStorage();
-
-    renderNotes();
-    renderAchiveNotes();
-    renderTrashNotes();
+    renderAllNotes();
 
     noteInputRef.value = "";
     noteTitleInputRef.value = "";
 }
 
 function saveToLocalStorage() {
-    localStorage.setItem('notes', JSON.stringify(allNotes));
+    localStorage.setItem('notes', JSON.stringify(notes));
 }
 
 function getFromLocalStorage() {
-    let myArray = JSON.parse(localStorage.getItem('allNotes.notes'));
+    let myArray = JSON.parse(localStorage.getItem('notes'));
     if (myArray == null) {
-        allNotes.notes != myArray;
+        notes != myArray;
     } else {
-        allNotes.notes = myArray;
+        notes = myArray;
     }
     
 }
@@ -95,17 +94,42 @@ function moveNote(indexNote, startKey, destinationKey) {
 
 
     saveToLocalStorage();
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
+    renderAllNotes();
     
+}
+
+function deleteNote(indexNote) {
+    let trashNote = notes.splice(indexNote,1);
+    allNotes.trashNotes.push(trashNote[0]);
+    let trashNoteTitle = notesTitles.splice(indexNote,1);
+    allNotes.trashNotesTitles.push(trashNoteTitle[0]);
+
+
+    saveToLocalStorage();
+    renderAllNotes();
+}
+
+function achiveNote(indexNote) {
+    let achiveNote = notes.splice(indexNote,1);
+    allNotes.achiveNotes.push(achiveNote[0]);
+    let achiveNoteTitle = notesTitles.splice(indexNote,1);
+    allNotes.achiveNotesTitles.push(achiveNoteTitle[0]);
+
+    renderAllNotes();
+}
+
+function reActivateNote(indexAchiveNote) {
+    let note = allNotes.achiveNotes.splice(indexAchiveNote,1);
+    allNotes.notes.push(note[0]);
+    let noteTitle = achiveNotesTitles.splice(indexAchiveNote,1);
+    allNotes.notesTitles.push(noteTitle[0]);
+
+    renderAllNotes();
 }
 
 function eraseNote(indexTrashNote) {
     allNotes.trashNotes.splice(indexTrashNote,1);
     allNotes.trashNotesTitles.splice(indexTrashNote,1);
-
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
+    
+    renderAllNotes();
 }
