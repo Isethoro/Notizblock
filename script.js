@@ -55,11 +55,11 @@ function addNote() {
     let noteTitleInput = noteTitleInputRef.value;
 
     if (noteTitleInputRef.value != "") {
-        allNotes.notesTitles.push(noteTitleInput);
+        noteTitle.push(noteTitleInput);
     }
 
     if (noteInputRef.value != "") {
-        allNotes.notes.push(noteInput);
+        notes.push(noteInput);
     }
     
     saveToLocalStorage();
