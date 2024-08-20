@@ -10,12 +10,14 @@ let allNotes = {
 
 function init() {    
     getFromLocalStorage();
+    renderAllNotes();
+}
+
+function renderAllNotes() {
     renderNotes();
     renderTrashNotes();
     renderAchiveNotes();
 }
-
-
 
 function renderNotes() {
     let contentRef = document.getElementById('content');
@@ -55,33 +57,30 @@ function addNote() {
     let noteTitleInput = noteTitleInputRef.value;
 
     if (noteTitleInputRef.value != "") {
-        noteTitle.push(noteTitleInput);
+        allNotes.notesTitles.push(noteTitleInput);
     }
 
     if (noteInputRef.value != "") {
-        notes.push(noteInput);
+        allNotes.notes.push(noteInput);
     }
     
     saveToLocalStorage();
-
-    renderNotes();
-    renderAchiveNotes();
-    renderTrashNotes();
+    renderAllNotes();
 
     noteInputRef.value = "";
     noteTitleInputRef.value = "";
 }
 
 function saveToLocalStorage() {
-    localStorage.setItem('notes', JSON.stringify(allNotes));
+    localStorage.setItem('allNotes', JSON.stringify(allNotes));
 }
 
 function getFromLocalStorage() {
-    let myArray = JSON.parse(localStorage.getItem('allNotes.notes'));
+    let myArray = JSON.parse(localStorage.getItem('allNotes'));
     if (myArray == null) {
-        allNotes.notes != myArray;
+        allNotes != myArray;
     } else {
-        allNotes.notes = myArray;
+        allNotes = myArray;
     }
     
 }
@@ -95,17 +94,14 @@ function moveNote(indexNote, startKey, destinationKey) {
 
 
     saveToLocalStorage();
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
+    renderAllNotes();
     
 }
 
 function eraseNote(indexTrashNote) {
     allNotes.trashNotes.splice(indexTrashNote,1);
     allNotes.trashNotesTitles.splice(indexTrashNote,1);
-
-    renderNotes();
-    renderTrashNotes();
-    renderAchiveNotes();
+    
+    saveToLocalStorage();
+    renderAllNotes();
 }
