@@ -1,7 +1,7 @@
 
 let allNotes = {
-    'notesTitles':['Ba','Aufgabe'],
-    'notes':['Banana','Rasenmähen'],
+    'notesTitles':[],
+    'notes':[],
     'trashNotesTitles':[],
     'trashNotes':[],
     'achiveNotesTitles':[],
@@ -96,35 +96,6 @@ function moveNote(indexNote, startKey, destinationKey) {
     saveToLocalStorage();
     renderAllNotes();
     
-}
-
-function deleteNote(indexNote) {
-    let trashNote = notes.splice(indexNote,1);
-    allNotes.trashNotes.push(trashNote[0]);
-    let trashNoteTitle = notesTitles.splice(indexNote,1);
-    allNotes.trashNotesTitles.push(trashNoteTitle[0]);
-
-
-    saveToLocalStorage();
-    renderAllNotes();
-}
-
-function achiveNote(indexNote) {
-    let achiveNote = notes.splice(indexNote,1);
-    allNotes.achiveNotes.push(achiveNote[0]);
-    let achiveNoteTitle = notesTitles.splice(indexNote,1);
-    allNotes.achiveNotesTitles.push(achiveNoteTitle[0]);
-
-    renderAllNotes();
-}
-
-function reActivateNote(indexAchiveNote) {
-    let note = allNotes.achiveNotes.splice(indexAchiveNote,1);
-    allNotes.notes.push(note[0]);
-    let noteTitle = achiveNotesTitles.splice(indexAchiveNote,1);
-    allNotes.notesTitles.push(noteTitle[0]);
-
-    renderAllNotes();
 }
 
 function eraseNote(indexTrashNote) {
